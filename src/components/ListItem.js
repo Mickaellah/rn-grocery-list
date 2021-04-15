@@ -49,7 +49,6 @@ const ListItem = ({name, onFavoritePress, isFavorite}) => {
         })
     }
 
-
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{name}</Text>
