@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const styles = StyleSheet.create({
     container: {
@@ -30,10 +31,25 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.2)'
+    },
+    leftAction: {
+        flex: 1,
+        backgroundColor: '#388e3c',
+        justifyContent: 'center',
+    },
+    actionText: {
+        color: '#fff',
+        fontWeight: '600',
+        padding: 20,
     }
 })
 
 export const Separator = () => <View style={styles.separator} />
+const LeftActions = () => {
+    <View style={styles.leftAction}>
+        <Text style={styles.actionText}>Add to Cart</Text>
+    </View>
+}
 
 const ListItem = ({name, onFavoritePress, isFavorite}) => {
     let starIcon;
@@ -50,18 +66,22 @@ const ListItem = ({name, onFavoritePress, isFavorite}) => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>{name}</Text>
-            {onFavoritePress && (
-                <TouchableOpacity onPress={onFavoritePress}>
-                    <Image 
-                        source={starIcon}
-                        style={styles.icon}
-                        resizeMode="contain"
-                    />
-                </TouchableOpacity>
-            )}
-        </View>
+        <Swipeable
+            renderLeftActions={LeftActions}
+        >
+            <View style={styles.container}>
+                <Text style={styles.text}>{name}</Text>
+                {onFavoritePress && (
+                    <TouchableOpacity onPress={onFavoritePress}>
+                        <Image 
+                            source={starIcon}
+                            style={styles.icon}
+                            resizeMode="contain"
+                        />
+                    </TouchableOpacity>
+                )}
+            </View>
+        </Swipeable>
     )
 }
 
