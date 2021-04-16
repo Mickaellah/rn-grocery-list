@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
+import {Animated, View, Text, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const styles = StyleSheet.create({
@@ -41,17 +41,43 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: '600',
         padding: 20,
+    },
+    rightAction: {
+        flex: 1,
+        backgroundColor: '#dd2c00',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
     }
 })
 
 export const Separator = () => <View style={styles.separator} />
-const LeftActions = () => {
-    <View style={styles.leftAction}>
-        <Text style={styles.actionText}>Add to Cart</Text>
-    </View>
+const LeftActions = (progress, dragX) => {
+    const scale = dragX.interpolate({
+        inputRange:[0, 100],
+        outputRange: [0, 1],
+        extrapolate: 'clamp'
+    })
+    return (
+        <View style={styles.leftAction}>
+            <Animated.Text style={[styles.actionText, {transform: [{scale}]}]}>Add to Cart</Animated.Text>
+        </View>
+    )
 }
 
-const ListItem = ({name, onFavoritePress, isFavorite}) => {
+const RightActions = (progress, dragX) => {
+    const scale = dragX.interpolate({
+        inputRange:[-100, 0],
+        outputRange: [1, 0],
+        extrapolate: 'clamp'
+    })
+    return (
+        <View style={styles.rightAction}>
+            <Animated.Text style={[styles.actionText, {transform: [{scale}]}]}>Delete</Animated.Text>
+        </View>
+    )
+}
+
+const ListItem = ({name, onFavoritePress, isFavorite, onAddedSwipe, onDeleteSwipe}) => {
     let starIcon;
     if (isFavorite) {
         starIcon = Platform.select({
@@ -67,7 +93,10 @@ const ListItem = ({name, onFavoritePress, isFavorite}) => {
 
     return (
         <Swipeable
-            renderLeftActions={LeftActions}
+            renderLeftActions={onAddedSwipe && LeftActions}
+            onSwipeableLeftOpen={onAddedSwipe}
+            renderRightActions={onDeleteSwipe && RightActions}
+            onSwipeableRightOpen={onDeleteSwipe}
         >
             <View style={styles.container}>
                 <Text style={styles.text}>{name}</Text>
