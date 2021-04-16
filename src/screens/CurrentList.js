@@ -18,35 +18,6 @@ export default () => {
 
     const {list, loading, addItem, removeItem} = useCurrentList();
 
-    // const [list, setList] = useState([]);
-    // const [loading, setLoading] = useState(true);
-
-    // const addItem = (text) => {
-    //     const newList = [{id: uuid(), name: text}, ...list];
-    //     setList(newList);
-    //     updateStoredCurrentList(newList);
-    // }
-
-    // const removeItem = (id) => {
-    //     const newList = list.filter(item => item.id !== id);
-    //     setList(newList);
-    //     updateStoredCurrentList(newList);
-    // }
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         AsyncStorage.getItem('@@GroceryList/currentList')
-    //             .then(data => JSON.parse(data))
-    //             .then(data => {
-    //                 if (data) {
-    //                     setList(data);
-    //                 }
-    //                 setLoading(false);
-    //             })
-    //     }, 1000)
-    // }, []);
-
-
     if (loading) {
         return (
             <SafeAreaView>
@@ -84,20 +55,4 @@ export default () => {
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
-    // return (
-    //     <SafeAreaView>
-    //         <ScrollView>
-    //             {nachos.map((item, index) => (
-    //                 <React.Fragment key={item.id}>
-    //                     <ListItem 
-    //                         name={item.name}
-    //                         onFavoritePress={() => alert('todo: handle favorite!')}
-    //                         isFavorite={index < 2}
-    //                     />
-    //                 </React.Fragment>
-    //             ))}
-    //         </ScrollView>
-    //     </SafeAreaView>
-    // )
-
 };
