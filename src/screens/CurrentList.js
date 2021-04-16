@@ -8,39 +8,44 @@ import nachos from '../data/nachos'
 
 import ListItem, {Separator} from '../components/ListItem';
 import AddItem from '../components/AddItem';
+import { useCurrentList } from '../util/ListManager';
 
-const updateStoredCurrentList = (list) => {
-    AsyncStorage.setItem('@@GroceryList/currentList', JSON.stringify(list));
-}
+// const updateStoredCurrentList = (list) => {
+//     AsyncStorage.setItem('@@GroceryList/currentList', JSON.stringify(list));
+// }
 
 export default () => {
-    const [list, setList] = useState([]);
-    const [loading, setLoading] = useState(true);
 
-    const addItem = (text) => {
-        const newList = [{id: uuid(), name: text}, ...list];
-        setList(newList);
-        updateStoredCurrentList(newList);
-    }
+    const {list, loading, addItem, removeItem} = useCurrentList();
 
-    const removeItem = (id) => {
-        const newList = list.filter(item => item.id !== id);
-        setList(newList);
-        updateStoredCurrentList(newList);
-    }
+    // const [list, setList] = useState([]);
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setTimeout(() => {
-            AsyncStorage.getItem('@@GroceryList/currentList')
-                .then(data => JSON.parse(data))
-                .then(data => {
-                    if (data) {
-                        setList(data);
-                    }
-                    setLoading(false);
-                })
-        }, 1000)
-    }, []);
+    // const addItem = (text) => {
+    //     const newList = [{id: uuid(), name: text}, ...list];
+    //     setList(newList);
+    //     updateStoredCurrentList(newList);
+    // }
+
+    // const removeItem = (id) => {
+    //     const newList = list.filter(item => item.id !== id);
+    //     setList(newList);
+    //     updateStoredCurrentList(newList);
+    // }
+
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         AsyncStorage.getItem('@@GroceryList/currentList')
+    //             .then(data => JSON.parse(data))
+    //             .then(data => {
+    //                 if (data) {
+    //                     setList(data);
+    //                 }
+    //                 setLoading(false);
+    //             })
+    //     }, 1000)
+    // }, []);
+
 
     if (loading) {
         return (
@@ -49,6 +54,7 @@ export default () => {
             </SafeAreaView>
         )
     }
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
