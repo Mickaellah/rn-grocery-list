@@ -114,7 +114,7 @@ const ListItem = ({name, onFavoritePress, isFavorite, onAddedSwipe, onDeleteSwip
             <TouchableOpacity onPress={onRowPress}>
                 <View style={styles.container}>
                     <Text style={styles.text}>{name}</Text>
-                    {onFavoritePress && (
+                    {/* {onFavoritePress && ( */}
                         <TouchableOpacity onPress={onFavoritePress}>
                             <Image 
                                 source={starIcon}
@@ -122,7 +122,7 @@ const ListItem = ({name, onFavoritePress, isFavorite, onAddedSwipe, onDeleteSwip
                                 resizeMode="contain"
                             />
                         </TouchableOpacity>
-                    )}
+                    {/* )} */}
                 </View>
             </TouchableOpacity>
         </Swipeable>

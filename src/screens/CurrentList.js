@@ -13,7 +13,7 @@ import { useCurrentList } from '../util/ListManager';
 
 export default ({navigation}) => {
 
-    const {list, loading, addItem, removeItem, cart, addToCart, favorite, addToFavorite} = useCurrentList();
+    const {list, loading, addItem, removeItem, cart, addToCart, favorited, addToFavorite} = useCurrentList();
 
     if (loading) {
         return (
@@ -24,7 +24,7 @@ export default ({navigation}) => {
     }
 
     console.log("cart", cart);
-    // console.log('favorite', favorite);
+    // console.log(favorited);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

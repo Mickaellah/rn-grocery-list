@@ -15,11 +15,13 @@ const updateStoredCurrentFavorite = (list) => {
     AsyncStorage.setItem('@@GroceryList/currentFavorite', JSON.stringify(list));
 }
 
+// AsyncStorage.clear();
+
 export const useCurrentList = () => {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
-    const [favorite, setFavorite] = useState([]);
+    const [favorited, setFavorited] = useState([]);
 
     const addItem = (text) => {
         const newList = [{id: uuid(), name: text}, ...list];
@@ -42,9 +44,8 @@ export const useCurrentList = () => {
 
     const addToFavorite = (item) => {
         // removeItem(item.id);
-        // console.log(favorite);
-        const newFavorite = [item, ...favorite]
-        setFavorite(newFavorite);
+        const newFavorite = [item, ...favorited];
+        setFavorited(newFavorite);
         updateStoredCurrentFavorite(newFavorite);
     }
 
@@ -54,16 +55,16 @@ export const useCurrentList = () => {
             AsyncStorage.getItem('@@GroceryList/currentCart'),
             AsyncStorage.getItem('@@GroceryList/currentFavorite'),
         ])
-            .then(([list, cartItems, favoritedItems]) => [JSON.parse(list), JSON.parse(cartItems), JSON.parse(favoritedItems)])
-            .then(([list, cartItems, favoritedItems]) => {
+            .then(([list, cartItems, favoritedList]) => [JSON.parse(list), JSON.parse(cartItems), JSON.parse(favoritedList)])
+            .then(([list, cartItems, favoritedList]) => {
                 if (list) {
                     setList(list);
                 }
                 if (cartItems) {
                     setCart(cartItems);
                 }
-                if (favoritedItems) {
-                    setFavorite(favoritedItems);
+                if (favoritedList) {
+                    setFavorited(favoritedList);
                 }
                 setLoading(false);
             })
@@ -76,8 +77,8 @@ export const useCurrentList = () => {
         removeItem,
         cart,
         addToCart,
-        favorite,
+        favorited,
         addToFavorite,
-        updateStoredCurrentList,
+        // updateStoredCurrentList,
     }
 }
