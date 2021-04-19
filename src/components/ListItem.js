@@ -47,6 +47,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#dd2c00',
         justifyContent: 'center',
         alignItems: 'flex-end',
+    },
+    sectionContainer: {
+        backgroundColor: '#d3d3d3',
+        paddingVertical: 10,
+    },
+    sectionText: {
+        fontWeight: '600',
     }
 })
 
@@ -76,6 +83,12 @@ const RightActions = (progress, dragX) => {
         </View>
     )
 }
+
+export const SectionHeader = ({title}) => (
+    <View style={[styles.container, styles.sectionContainer]}>
+        <Text style={styles.sectionText}>{title}</Text>
+    </View>
+)
 
 const ListItem = ({name, onFavoritePress, isFavorite, onAddedSwipe, onDeleteSwipe, onRowPress}) => {
     let starIcon;
