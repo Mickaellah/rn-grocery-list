@@ -11,10 +11,15 @@ const updateStoredCurrentCart = (list) => {
     AsyncStorage.setItem('@@GroceryList/currentCart', JSON.stringify(list));
 }
 
+const updateStoredCurrentFavorite = (list) => {
+    AsyncStorage.setItem('@@GroceryList/currentFavorite', JSON.stringify(list));
+}
+
 export const useCurrentList = () => {
     const [list, setList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [cart, setCart] = useState([]);
+    const [favorite, setFavorite] = useState([]);
 
     const addItem = (text) => {
         const newList = [{id: uuid(), name: text}, ...list];
@@ -35,18 +40,30 @@ export const useCurrentList = () => {
         updateStoredCurrentCart(newCart);
     }
 
+    const addToFavorite = (item) => {
+        // removeItem(item.id);
+        // console.log(favorite);
+        const newFavorite = [item, ...favorite]
+        setFavorite(newFavorite);
+        updateStoredCurrentFavorite(newFavorite);
+    }
+
     useEffect(() => {
         Promise.all([
             AsyncStorage.getItem('@@GroceryList/currentList'),
             AsyncStorage.getItem('@@GroceryList/currentCart'),
+            AsyncStorage.getItem('@@GroceryList/currentFavorite'),
         ])
-            .then(([list, cartItems]) => [JSON.parse(list), JSON.parse(cartItems)])
-            .then(([list, cartItems]) => {
+            .then(([list, cartItems, favoritedItems]) => [JSON.parse(list), JSON.parse(cartItems), JSON.parse(favoritedItems)])
+            .then(([list, cartItems, favoritedItems]) => {
                 if (list) {
                     setList(list);
                 }
                 if (cartItems) {
                     setCart(cartItems);
+                }
+                if (favoritedItems) {
+                    setFavorite(favoritedItems);
                 }
                 setLoading(false);
             })
@@ -59,6 +76,8 @@ export const useCurrentList = () => {
         removeItem,
         cart,
         addToCart,
+        favorite,
+        addToFavorite,
         updateStoredCurrentList,
     }
 }

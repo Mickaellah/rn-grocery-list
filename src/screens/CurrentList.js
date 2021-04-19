@@ -13,7 +13,7 @@ import { useCurrentList } from '../util/ListManager';
 
 export default ({navigation}) => {
 
-    const {list, loading, addItem, removeItem, cart, addToCart} = useCurrentList();
+    const {list, loading, addItem, removeItem, cart, addToCart, favorite, addToFavorite} = useCurrentList();
 
     if (loading) {
         return (
@@ -24,6 +24,7 @@ export default ({navigation}) => {
     }
 
     console.log("cart", cart);
+    // console.log('favorite', favorite);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -42,7 +43,7 @@ export default ({navigation}) => {
                     renderItem={({item, index})=> (
                         <ListItem 
                             name={item.name}
-                            onFavoritePress={() => alert('todo: handle favorite!')}
+                            onFavoritePress={() => addToFavorite(item)}
                             isFavorite={index < 2}
                             onAddedSwipe={() => addToCart(item)}
                             onDeleteSwipe={() => removeItem(item.id)}
